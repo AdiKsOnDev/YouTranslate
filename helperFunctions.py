@@ -4,7 +4,7 @@ from moviepy.editor import VideoFileClip, AudioFileClip
 from googletrans import Translator
 
 
-def get_transcript(video_id, file_name):
+def get_transcript(video_id:str, file_name:str):
     """ Function will get the transcript of a video and write it down
         in "transcript.txt"
 
@@ -21,7 +21,7 @@ def get_transcript(video_id, file_name):
         for subtitle in transcript:
             file.write(subtitle.get("text") + "\n")
 
-def installVideo(link):
+def installVideo(link:str):
     """ Function will install a video using the passed link
 
         Arguments:
@@ -51,7 +51,7 @@ def installVideo(link):
     except Exception as e:
         print(f"!!ERROR!! {e}")
 
-def extract_audio(input_file, output_file):
+def extract_audio(input_file:str, output_file:str):
     """ Function for extracting the audio from a video.  
 
         Arguments:
@@ -65,7 +65,7 @@ def extract_audio(input_file, output_file):
 
     audio_clip.write_audiofile(output_file, codec='mp3')
 
-def replace_audio(input_file, audio_replacement_file, output_file):
+def replace_audio(input_file:str, audio_replacement_file:str, output_file:str):
     """ Function for replacing the audio track in a video with a new one.  
 
         Arguments:
@@ -81,7 +81,7 @@ def replace_audio(input_file, audio_replacement_file, output_file):
 
     video_clip.write_videofile(output_file, codec='libx264')
 
-def get_translation(input_file, output_file, language):
+def get_translation(input_file:str, output_file:str, language:str):
     """ Function for translating a text.  
 
         Arguments:

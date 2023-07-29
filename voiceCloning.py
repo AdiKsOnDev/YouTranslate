@@ -1,7 +1,7 @@
 from elevenlabs import clone, generate, set_api_key, save, Voices
 from apiKey import API_KEY
 
-def voiceOver(transcript, output_file):
+def voiceOver(transcript:str, output_file:str):
     """ Function for recording the translated audio track.  
 
         Arguments:
@@ -26,4 +26,4 @@ def voiceOver(transcript, output_file):
     save(audio, output_file)
     
     voices = Voices.from_api()
-    voices.delete
+    print(voices[0].id)
