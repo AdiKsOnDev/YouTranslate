@@ -1,6 +1,7 @@
 from pytube import YouTube
 from youtube_transcript_api import YouTubeTranscriptApi
-from moviepy.editor import VideoFileClip
+from moviepy.editor import VideoFileClip, AudioFileClip
+
 
 """ Function will get the transcript of a video and write it down
     in "transcript.txt"
@@ -43,3 +44,13 @@ def extract_audio(input_file, output_file):
     video_clip = VideoFileClip(input_file)
     audio_clip = video_clip.audio
     audio_clip.write_audiofile(output_file, codec='mp3')
+
+def replace_audio(input_video_file, audio_replacement_file,output_video_file):
+    video_clip = VideoFileClip(input_video_file)
+    audio_replacement_clip = AudioFileClip(audio_replacement_file)
+
+    video_clip = video_clip.set_audio(audio_replacement_clip)
+    video_clip.write_videofile(output_video_file, codec='libx264')
+
+
+
