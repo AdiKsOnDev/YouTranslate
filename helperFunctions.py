@@ -1,6 +1,7 @@
 from pytube import YouTube
 from youtube_transcript_api import YouTubeTranscriptApi
 from moviepy.editor import VideoFileClip, AudioFileClip
+from googletrans import Translator
 
 
 """ Function will get the transcript of a video and write it down
@@ -11,10 +12,12 @@ from moviepy.editor import VideoFileClip, AudioFileClip
     
     No return type
 """
-def get_transcript(video_id):
+def get_transcript(video_id, file_name):
+    print("Getting the transcript...")
+
     transcript = YouTubeTranscriptApi.get_transcript(video_id)
 
-    with open("data/transcript.txt", "w") as file:
+    with open(file_name, "w") as file:
         for subtitle in transcript:
             file.write(subtitle.get("text") + "\n")
 
@@ -45,12 +48,18 @@ def extract_audio(input_file, output_file):
     audio_clip = video_clip.audio
     audio_clip.write_audiofile(output_file, codec='mp3')
 
-def replace_audio(input_video_file, audio_replacement_file,output_video_file):
+def replace_audio(input_video_file, audio_replacement_file, output_video_file):
     video_clip = VideoFileClip(input_video_file)
     audio_replacement_clip = AudioFileClip(audio_replacement_file)
 
     video_clip = video_clip.set_audio(audio_replacement_clip)
     video_clip.write_videofile(output_video_file, codec='libx264')
 
+def get_translation(input_file, output_file, language):
+    translator = Translator()
 
+    with open(input_file, "r") as file:
+        translation = translator.translate(file.read(), dest=language)
 
+    with open(output_file, "w") as file:
+        file.write(translation.text)

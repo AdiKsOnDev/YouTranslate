@@ -158,6 +158,10 @@ apiKey.py
 # Audio and Video files
 audios/*.mp3
 videos/*.mp4
+videos/Original_Video
+
+# Transcripts
+data/*.txt
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
