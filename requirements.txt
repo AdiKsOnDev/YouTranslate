@@ -1,0 +1,4 @@
+youtube-transcript-api
+pytube
+moviepy
+elevenlabs
