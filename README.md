@@ -22,6 +22,7 @@ To use TranslatorYouTuber, you will need the following:
 ## :scroll: Usage
 
 1. Run the Script:
+   - Create an apiKey.py file and write `API_KEY = "Your elevenlabs api key"` in it
    - Open your terminal or command prompt.
    - Execute the following command:
 
