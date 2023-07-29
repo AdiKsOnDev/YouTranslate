@@ -2,5 +2,5 @@ youtube-transcript-api
 pytube
 moviepy
 elevenlabs
-googletrans
+googletrans==3.1.0a0
 requests
