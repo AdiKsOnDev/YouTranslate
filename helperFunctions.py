@@ -93,8 +93,8 @@ def get_translation(input_file:str, output_file:str, language:str):
     """
     translator = Translator()
 
-    with open(input_file, "r") as file:
+    with open(input_file, "r", encoding="utf-8") as file:
         translation = translator.translate(file.read(), dest=language)
 
-    with open(output_file, "w") as file:
+    with open(output_file, "w", encoding="utf-8") as file:
         file.write(translation.text)
