@@ -1,6 +1,6 @@
 from helperFunctions import *
 from pytube import extract
-from voiceCloning import voiceOver
+from voiceCloning import *
 
 url = input("Paste the link to the video you want to translate: ")
 id = extract.video_id(url)
@@ -12,5 +12,6 @@ get_translation("data/transcript.txt", "data/translated_transcript.txt", "de") #
 
 with open("data/translated_transcript.txt", "r") as file:
     voiceOver(file.read(300), "audios/VoiceOver.mp3")
+    delete_cloned_voice()
 
 replace_audio("videos/Original_Video", "audios/VoiceOver.mp3", "videos/Final_Video.mp4") # Combine the final recording with the original video

@@ -3,3 +3,4 @@ pytube
 moviepy
 elevenlabs
 googletrans
+requests
