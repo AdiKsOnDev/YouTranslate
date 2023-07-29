@@ -8,7 +8,7 @@ id = extract.video_id(url)
 installVideo(url)
 get_transcript(id, "data/transcript.txt") # Get the video's transcript to translate it to a different language
 extract_audio("videos/Original_Video", "audios/sample.mp3") # Extract the audio to use it as a sample for voice cloning
-get_translation("data/transcript.txt", "data/translated_transcript.txt", "de") # Translate the transcript for recording a voice over for it
+get_translation("data/transcript.txt", "data/translated_transcript.txt", "df") # Translate the transcript for recording a voice over for it
 
 with open("data/translated_transcript.txt", "r") as file:
     voiceOver(file.read(), "audios/VoiceOver.mp3")
