@@ -11,7 +11,7 @@ extract_audio("videos/Original_Video", "audios/sample.mp3") # Extract the audio 
 get_translation("data/transcript.txt", "data/translated_transcript.txt", "de") # Translate the transcript for recording a voice over for it
 
 with open("data/translated_transcript.txt", "r") as file:
-    voiceOver(file.read(300), "audios/VoiceOver.mp3")
+    voiceOver(file.read(), "audios/VoiceOver.mp3")
     delete_cloned_voice()
 
 replace_audio("videos/Original_Video", "audios/VoiceOver.mp3", "videos/Final_Video.mp4") # Combine the final recording with the original video
