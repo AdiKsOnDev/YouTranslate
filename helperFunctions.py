@@ -2,7 +2,25 @@ from pytube import YouTube
 from youtube_transcript_api import YouTubeTranscriptApi
 from moviepy.editor import VideoFileClip, AudioFileClip
 from googletrans import Translator
+def get_transcript_no_delay(video_id:str, file_name:str):
+    """ Function will get the transcript of a video and write it down
+        in "transcript.txt"
 
+        Arguments:
+            video_id --> String containing the ID for a YouTube video
+        
+        No return type
+    """
+    print("Getting the transcript...")
+
+    transcript = YouTubeTranscriptApi.get_transcript(video_id)
+
+    with open(file_name, "w", encoding= "utf-8") as file:
+        for i in range(len(transcript)):
+            subtitle = transcript[i]
+            text = subtitle["text"]
+            file.write(text)
+            file.write("\n")
 
 def get_transcript(video_id:str, file_name:str):
     """ Function will get the transcript of a video and write it down

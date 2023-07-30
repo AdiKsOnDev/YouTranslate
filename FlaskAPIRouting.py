@@ -2,7 +2,9 @@ from flask import Flask, request, jsonify
 from pytube import YouTube
 import helperFunctions as hf
 import voiceCloning as vc
+from flask_cors import CORS
 app = Flask(__name__)
+CORS(app)
 
 
 # API Routes
@@ -33,6 +35,30 @@ def translated_audio():
     with open("audios/VoiceOver.mp3", "rb") as file:
         audio_data = file.read()
     return audio_data, 200, {'Content-Type': 'audio/mpeg'}
+"""
+    Route for getting the transcript as text
+"""
+@app.route('/transcript_text', methods=['POST'])
+def get_transcript_text():
+    data = request.get_json()
+    video_url = data['video_url']
+    
+    try:
+        yt = YouTube(video_url)
+    except Exception as e:
+        return jsonify({"error": f"Connection Error: {e}"}), 400
+
+    try:
+        video_id = video_url.split('=')[1]
+        hf.get_transcript_no_delay(video_id, "data/transcript.txt")
+
+        with open("data/transcript.txt", "r", encoding="utf-8") as file:
+            transcript_text = file.read()
+
+    except Exception as e:
+        return jsonify({"error": f"Error generating transcript: {e}"}), 500
+
+    return jsonify({"transcript": transcript_text}), 200
 """
     complete route with video
 """
