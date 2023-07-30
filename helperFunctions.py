@@ -17,10 +17,33 @@ def get_transcript(video_id:str, file_name:str):
 
     transcript = YouTubeTranscriptApi.get_transcript(video_id)
 
-    with open(file_name, "w") as file:
-        for subtitle in transcript:
-            file.write(subtitle.get("text") + "\n")
+    with open(file_name, "w", encoding= "utf-8") as file:
+        x = transcript[0].get("start")
+        x = int(x/0.04)
+        file.write("uh")
+        file.write(x*".")
+        file.write("\n")
+        for i in range(len(transcript)):
+            subtitle = transcript[i]
+            text = subtitle["text"]
+            file.write(text)
+            
+            # Calculate time difference between this subtitle and the next one
+            if i < len(transcript) - 1:
+                current_end_time = subtitle["start"] + subtitle["duration"]
+                next_start_time = transcript[i + 1]["start"]
+                time_diff =  current_end_time - next_start_time 
+                
+                # Calculate the number of full stops (0.1 second per full stop)
+                num_full_stops = int(time_diff / 0.1)
 
+                if(num_full_stops > 27):
+                    print("adding a delay of ", num_full_stops, " seconds")
+                    file.write("." * int(num_full_stops/2))
+            
+            file.write("\n")
+
+    
 def installVideo(link:str):
     """ Function will install a video using the passed link
 

@@ -2,7 +2,26 @@ from elevenlabs import clone, generate, set_api_key, save, Voices, Voice
 from apiKey import API_KEY
 
 import requests
+def voiceOverNoClone(transcript:str, output_file:str):
+    """ Function for recording the translated audio track.  
 
+        Arguments:
+            transcript --> The transcript to be used for voice-over
+            output_file --> Path to the output file
+        
+        No return type
+    """
+    set_api_key(API_KEY)
+
+    print("Generating a Voice Over...")
+
+    
+
+
+    audio = generate(text=transcript)
+
+    save(audio, output_file)
+    
 def voiceOver(transcript:str, output_file:str):
     """ Function for recording the translated audio track.  
 
