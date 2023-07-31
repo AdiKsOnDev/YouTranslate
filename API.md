@@ -40,7 +40,10 @@ The request body should be a JSON object with the following parameters:
 
 ## Running the Application
 To run the application, execute the following command:
-Python FlaskAPIRouting.py
+
+```bash
+python FlaskAPIRouting.py
+```
 
 
 The application will be hosted locally on `http://127.0.0.1:5000`, and you can use the endpoints as described above.
