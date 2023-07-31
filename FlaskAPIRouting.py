@@ -11,6 +11,40 @@ CORS(app)
 """
     Mini-Route for just audio
 """
+@app.route('/voiceover_text', methods=['POST'])
+def voiceover_text():
+    data = request.get_json()
+    text = data.get('text')
+    language_code = data.get('language_code')
+    language_code = language_code.lower()
+    print(text, language_code)
+    if not text or not language_code:
+        return jsonify({"error": "Invalid request data."}), 400
+
+    try:
+        # If a language code is provided, translate the text
+        with open("data/transcript.txt", "w", encoding="utf-8") as file:
+                file.write(text)
+        if language_code != "en":
+            hf.get_translation("data/transcript.txt", "data/translated_text.txt", language_code)
+            with open("data/translated_text.txt", "r", encoding="utf-8") as file:
+                text = file.read()
+        if language_code == "en":
+            with open("data/translated_text.txt", "w", encoding="utf-8") as file:
+                file.write(text)
+
+
+        # Generate voiceover audio from the given text
+        vc.voiceOverNoClone(text, "audios/VoiceOver.mp3")
+
+        # Read the generated audio and send it as a response
+        with open("audios/VoiceOver.mp3", "rb") as file:
+            audio_data = file.read()
+
+        return audio_data, 200, {'Content-Type': 'audio/mpeg'}
+    except Exception as e:
+        return jsonify({"error": f"Error generating voice audio: {e}"}), 500
+
 @app.route('/translated_audio', methods=['POST'])
 def translated_audio():
     data = request.get_json()
@@ -62,8 +96,8 @@ def get_transcript_text():
 """
     complete route with video
 """
-@app.route('/translated_video', methods=['POST'])
-def translate_video():
+@app.route('/translated_video_clone', methods=['POST'])
+def translate_video_clone():
     data = request.get_json()
     video_url = data['video_url']
     language_code = data['language_code']
@@ -80,6 +114,37 @@ def translate_video():
 
         with open("data/translated_transcript.txt", "r") as file:
             vc.voiceOver(file.read(), "audios/VoiceOver.mp3")
+            vc.delete_cloned_voice()
+
+        hf.replace_audio("videos/Original_Video", "audios/VoiceOver.mp3", "videos/Final_Video.mp4")
+    except Exception as e:
+        return jsonify({"error": f"Error translating and creating video: {e}"}), 500
+
+    # Read the final video and send it as a response
+    with open("videos/Final_Video.mp4", "rb") as file:
+        video_data = file.read()
+    return video_data, 200, {'Content-Type': 'video/mp4'}
+
+
+
+@app.route('/translated_video_no_clone', methods=['POST'])
+def translate_video_no_clone():
+    data = request.get_json()
+    video_url = data['video_url']
+    language_code = data['language_code']
+    try:
+        yt = YouTube(video_url)
+    except Exception as e:
+        return jsonify({"error": f"Connection Error: {e}"}), 400
+    try:
+        yt.streams.filter(progressive=True, file_extension="mp4").first().download(output_path="videos", filename="Original_Video")
+        video_id = yt.video_id
+        hf.get_transcript(video_id, "data/transcript.txt")
+        hf.get_translation("data/transcript.txt", "data/translated_transcript.txt", language_code)
+        hf.extract_audio("videos/Original_Video", "audios/sample.mp3")
+
+        with open("data/translated_transcript.txt", "r") as file:
+            vc.voiceOverNoClone(file.read(), "audios/VoiceOver.mp3")
             vc.delete_cloned_voice()
 
         hf.replace_audio("videos/Original_Video", "audios/VoiceOver.mp3", "videos/Final_Video.mp4")
