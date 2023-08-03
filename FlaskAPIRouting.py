@@ -3,21 +3,26 @@ from pytube import YouTube
 import helperFunctions as hf
 import voiceCloning as vc
 from flask_cors import CORS
+
 app = Flask(__name__)
 CORS(app)
 
-
 # API Routes
-"""
-    Mini-Route for just audio
-"""
 @app.route('/voiceover_text', methods=['POST'])
 def voiceover_text():
+    """ An API route just for the audio file
+
+        Returns:
+            mp3: An .mp3 file
+            HTTPS code: Depending on the result
+    """    
     data = request.get_json()
     text = data.get('text')
     language_code = data.get('language_code')
     language_code = language_code.lower()
+
     print(text, language_code)
+
     if not text or not language_code:
         return jsonify({"error": "Invalid request data."}), 400
 
@@ -47,9 +52,16 @@ def voiceover_text():
 
 @app.route('/translated_audio', methods=['POST'])
 def translated_audio():
+    """ An API route for the translated audio track
+
+        Returns:
+            mp3: An .mp3 file
+            HTTPS code: Depending on the result
+    """    
     data = request.get_json()
     video_url = data['video_url']
     language_code = data['language_code']
+    
     try:
         yt = YouTube(video_url)
     except Exception as e:
@@ -57,6 +69,7 @@ def translated_audio():
     try:
 
         video_id = video_url.split('=')[1]
+
         hf.get_transcript(video_id, "data/transcript.txt")
         hf.get_translation("data/transcript.txt", "data/translated_transcript.txt", language_code)
 
@@ -74,6 +87,12 @@ def translated_audio():
 """
 @app.route('/transcript_text', methods=['POST'])
 def get_transcript_text():
+    """ An API route for the transcript
+
+        Returns:
+            .json: A json containing the transcript
+            HTTPS code: Depending on the result
+    """    
     data = request.get_json()
     video_url = data['video_url']
     
@@ -84,6 +103,7 @@ def get_transcript_text():
 
     try:
         video_id = video_url.split('=')[1]
+
         hf.get_transcript_no_delay(video_id, "data/transcript.txt")
 
         with open("data/transcript.txt", "r", encoding="utf-8") as file:
@@ -93,21 +113,28 @@ def get_transcript_text():
         return jsonify({"error": f"Error generating transcript: {e}"}), 500
 
     return jsonify({"transcript": transcript_text}), 200
-"""
-    complete route with video
-"""
+
 @app.route('/translated_video_clone', methods=['POST'])
 def translate_video_clone():
+    """ An API route for the final, translated video with a cloned voice
+
+        Returns:
+            .mp4: A .mp4 file containing the translated and narrated video
+            HTTPS code: Depending on the result
+    """    
     data = request.get_json()
     video_url = data['video_url']
     language_code = data['language_code']
+
     try:
         yt = YouTube(video_url)
     except Exception as e:
         return jsonify({"error": f"Connection Error: {e}"}), 400
+    
     try:
         yt.streams.filter(progressive=True, file_extension="mp4").first().download(output_path="videos", filename="Original_Video")
         video_id = yt.video_id
+
         hf.get_transcript(video_id, "data/transcript.txt")
         hf.get_translation("data/transcript.txt", "data/translated_transcript.txt", language_code)
         hf.extract_audio("videos/Original_Video", "audios/sample.mp3")
@@ -123,22 +150,32 @@ def translate_video_clone():
     # Read the final video and send it as a response
     with open("videos/Final_Video.mp4", "rb") as file:
         video_data = file.read()
+
     return video_data, 200, {'Content-Type': 'video/mp4'}
 
 
 
 @app.route('/translated_video_no_clone', methods=['POST'])
 def translate_video_no_clone():
+    """ An API route for the final, translated video without a cloned voice
+
+        Returns:
+            .mp4: A .mp4 file containing the translated and narrated video
+            HTTPS code: Depending on the result
+    """    
     data = request.get_json()
     video_url = data['video_url']
     language_code = data['language_code']
+
     try:
         yt = YouTube(video_url)
     except Exception as e:
         return jsonify({"error": f"Connection Error: {e}"}), 400
+    
     try:
         yt.streams.filter(progressive=True, file_extension="mp4").first().download(output_path="videos", filename="Original_Video")
         video_id = yt.video_id
+        
         hf.get_transcript(video_id, "data/transcript.txt")
         hf.get_translation("data/transcript.txt", "data/translated_transcript.txt", language_code)
         hf.extract_audio("videos/Original_Video", "audios/sample.mp3")
@@ -154,6 +191,8 @@ def translate_video_no_clone():
     # Read the final video and send it as a response
     with open("videos/Final_Video.mp4", "rb") as file:
         video_data = file.read()
+
     return video_data, 200, {'Content-Type': 'video/mp4'}
+
 if __name__ == '__main__':
     app.run(debug=True)
