@@ -1,7 +1,10 @@
 from elevenlabs import clone, generate, set_api_key, save, Voices, Voice
-from apiKey import API_KEY
+from dotenv import dotenv_values
 
 import requests
+
+config = dotenv_values(".env")
+
 def voiceOverNoClone(transcript:str, output_file:str):
     """ Function for recording the translated audio track.  
 
@@ -11,7 +14,7 @@ def voiceOverNoClone(transcript:str, output_file:str):
         
         No return type
     """
-    set_api_key(API_KEY)
+    set_api_key(config["API_KEY"])
 
     print("Generating a Voice Over...")
 
@@ -31,7 +34,7 @@ def voiceOver(transcript:str, output_file:str):
         
         No return type
     """
-    set_api_key(API_KEY)
+    set_api_key(config["API_KEY"])
 
     print("Generating a Voice Over...")
 
@@ -55,7 +58,7 @@ def delete_cloned_voice():
     """    
     HEADERS = {
         "Accept": "application/json",
-        "xi-api-key": API_KEY
+        "xi-api-key": config["API_KEY"]
     }
 
     voices = Voices.from_api()
