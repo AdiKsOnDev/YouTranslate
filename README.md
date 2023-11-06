@@ -1,6 +1,6 @@
-# :movie_camera: TranslatorYouTuber
-
-TranslatorYouTuber is a Python script that allows you to create multilingual YouTube videos by cloning the voice of the video's author and translating the video's transcript to a different language. The script then performs a voice-over using the translated script and cloned voice, enabling you to reach a broader audience by offering content in multiple languages!
+# :movie_camera: YouTranslate
+![Logo](https://github.com/AdiKsOnDev/YouTranslate/edit/main/Assets/logo.jpg)
+YouTranslate is a Python script that allows you to create multilingual YouTube videos by cloning the voice of the video's author and translating the video's transcript to a different language. The script then performs a voice-over using the translated script and cloned voice, enabling you to reach a broader audience by offering content in multiple languages!
 
 ## :open_file_folder: Installation
 
@@ -14,7 +14,7 @@ pip install -r requirements.txt
 
 ## :exclamation: Prerequisites
 
-To use TranslatorYouTuber, you will need the following:
+To use YouTranslate, you will need the following:
 
 - An API Key for the ElevenLab's speech synthesis (See [ElevenLabs API](https://docs.elevenlabs.io/api-reference/quick-start/introduction))
 - A YouTube video URL for which you want to create a multilingual version.
@@ -22,7 +22,7 @@ To use TranslatorYouTuber, you will need the following:
 ## :scroll: Usage
 
 1. Run the Script:
-   - Create an apiKey.py file and write `API_KEY = "Your elevenlabs api key"` in it
+   - Create a `.env` file and write `API_KEY = "Your elevenlabs api key"` in it
    - Open your terminal or command prompt.
    - Execute the following command:
 
@@ -41,7 +41,7 @@ python main.py
 
 ## :question: How It Works
 
-TranslatorYouTuber utilizes ElevenLabs' voice cloning API and 'googletrans' python library to create multilingual YouTube videos. The steps involved are as follows:
+YouTranslate utilizes ElevenLabs' voice cloning API and 'googletrans' python library to create multilingual YouTube videos. The steps involved are as follows:
 
 1. Getting the video and Cloning the voice:
    - The script uses voice cloning technology to clone the voice of the video's author, based on the `sample.mp3` file (Original audio track from the video)
@@ -54,4 +54,4 @@ TranslatorYouTuber utilizes ElevenLabs' voice cloning API and 'googletrans' pyth
 
 ## :medical_symbol: Contributing
 
-Contributions to TranslatorYouTuber are welcome! If you find any issues or want to improve the script, feel free to submit a pull request. For major changes or new features, please open an issue first to discuss the proposed changes.
+Contributions to YouTranslate are welcome! If you find any issues or want to improve the script, feel free to submit a pull request. For major changes or new features, please open an issue first to discuss the proposed changes.
