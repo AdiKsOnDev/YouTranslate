@@ -1,6 +1,6 @@
-from helperFunctions import *
+from modules.helperFunctions import *
 from pytube import extract
-from voiceCloning import *
+from modules.voiceCloning import *
 
 url = input("Paste the link to the video you want to translate: ")
 id = extract.video_id(url)

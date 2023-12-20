@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from pytube import YouTube
-import helperFunctions as hf
-import voiceCloning as vc
+import modules.helperFunctions as hf
+import modules.voiceCloning as vc
 from flask_cors import CORS
 
 app = Flask(__name__)
