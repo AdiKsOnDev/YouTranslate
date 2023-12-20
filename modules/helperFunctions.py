@@ -90,8 +90,11 @@ def installVideo(link:str):
             output_path = SAVE_PATH, 
             filename = "Original_Video"
         )
+
+        return 0
     except Exception as e:
         print(f"!!ERROR!! {e}")
+        return 1
 
 def extract_audio(input_file:str, output_file:str):
     """ Function for extracting the audio from a video.  
