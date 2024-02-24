@@ -1,0 +1,6 @@
+Welcome to YouTranslate! 💻 You're currently on a custom Dev Container for GitHub Codespaces!
+
+To get started, make sure you have your API Key for the ElevenLab's speech synthesis
+ElevenLabs API: https://docs.elevenlabs.io/api-reference/quick-start/introduction
+
+Have fun! 😊
