@@ -2,6 +2,9 @@
    <img width="100%" src="https://github.com/AdiKsOnDev/YouTranslate/blob/main/Assets/logo.jpg" alt="Logo"/>
 </p>
 <hr>
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/AdiKsOnDev/YouTranslate)
+
 YouTranslate is a Python script that allows you to create multilingual YouTube videos by cloning the voice of the video's author and translating the video's transcript to a different language. The script then performs a voice-over using the translated script and cloned voice, enabling you to reach a broader audience by offering content in multiple languages!
 
 ## :open_file_folder: Installation

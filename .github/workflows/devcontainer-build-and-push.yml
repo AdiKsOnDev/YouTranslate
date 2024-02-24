@@ -1,0 +1,34 @@
+name: Dev Container Build and Push Image
+
+on:
+  push:
+    paths:
+    - '.github/**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      id: checkout
+      uses: actions/checkout@v4
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Convert Repository name to lower case
+      id: lowercase
+      run: echo "REPO=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+    - name: Pre-build Dev Container image
+      uses: devcontainers/ci@v0.3
+      with:
+        subFolder: .github
+        imageName: ghcr.io/${{ env.REPO }}
+        cacheFrom: ghcr.io/${{ github.repository }}
+        push: always
