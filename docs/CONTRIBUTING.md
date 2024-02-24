@@ -1,9 +1,24 @@
 # 📜 Conventions for contributions
-This file contains guidelines for creating *commits, PRs, branches, issues, and etc*. 
+This file contains guidelines for creating *commits, PRs, branches, issues, and etc*.
+
+## Index
+
+- [Commits](#➕-commits)
+  - [Commit Message Structure](#🗃️-commit-message-structure)
+  - [Example Commit](#example-commit)
+  - [Commit Types](#📑-commit-types)
+  - [Breaking Changes](#❗️-breaking-changes)
+- [Branching](#🌳-branching)
+  - [Example Branch Name](#📄-example-branch-name)
+- [Pull Requests (PRs)](#pull-requests-prs)
+  - [PR message structure](#🗃️-pr-message-structure)
+  - [Example PR Message](#📄-example-pr-message)
 
 > [!NOTE]  
 > **READ BEFORE CONTRIBUTING!**<br>
 > If you have any questions on the following information, text me (Adil), I will take you through it.
+
+---
 
 ## ➕ Commits
 First, let's answer the questions **"When do I commit? And how many files do I commit at once?"**
@@ -84,6 +99,7 @@ Closes Issue #number-of-the-issue
 
 ### 📄 Example PR message
 ---
+
 ```
 Login Page finished
 
